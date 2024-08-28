@@ -46,8 +46,11 @@ import fr.paris.lutece.plugins.blog.service.BlogService;
 import fr.paris.lutece.plugins.blog.service.PublishingService;
 import fr.paris.lutece.plugins.blog.business.Blog;
 import fr.paris.lutece.util.html.HtmlTemplate;
-
+import fr.paris.lutece.portal.business.file.File;
+import fr.paris.lutece.plugins.blog.service.BlogFileService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This class represents business objects BlogsPortlet
@@ -109,9 +112,29 @@ public class BlogPortlet extends PortletHtmlContent
         {
             locale = request.getLocale( );
         }
+        File luteceTemplateFile = null;
+        if( StringUtils.isNumeric(pageTemplate.getFileKey()) )
+        {
+            try
+            {
+                luteceTemplateFile = BlogFileService.getFileByKey( pageTemplate.getFileKey( ) );
+            }
+            catch( Exception e )
+            {
+                AppLogService.error( e );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( pageTemplate.getFile( ), locale, model );
+            }
+        }
+        HtmlTemplate template = null;
+        if(luteceTemplateFile != null && luteceTemplateFile.getPhysicalFile( ) != null)
+        {
+            template = AppTemplateService.getTemplateFromStringFtl( luteceTemplateFile.getPhysicalFile( ).getValue().toString(), locale, model );
 
+        }
+        else
+        {
+            template = AppTemplateService.getTemplate( pageTemplate.getFileKey( ), locale, model );
+        }
         return template.getHtml( );
 
     }

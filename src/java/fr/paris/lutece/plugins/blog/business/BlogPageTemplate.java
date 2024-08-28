@@ -13,7 +13,7 @@
  *     and the following disclaimer in the documentation and/or other materials
  *     provided with the distribution.
  *
- *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *  3. Neither the key of 'Mairie de Paris' nor 'Lutece' nor the keys of its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
@@ -40,8 +40,9 @@ public class BlogPageTemplate
 {
     private int _nId;
     private String _strDescription;
-    private String _strFile;
-    private String _strPicture;
+    private String _strFileKey;
+    private String _strPictureKey;
+    private String _strPortletType;
 
     /**
      * Returns the page template identifier
@@ -86,44 +87,65 @@ public class BlogPageTemplate
     }
 
     /**
-     * Returns the name of the html page which manages this type of page template
+     * Returns the key of the html page which manages this type of page template
      *
-     * @return the name of the html page
+     * @return the key of the html page
      */
-    public String getFile( )
+    public String getFileKey( )
     {
-        return _strFile;
+        return _strFileKey;
     }
 
     /**
-     * Sets the name of the html page which manages this type of page template
+     * Sets the key of the html page which manages this type of page template
      *
-     * @param strFile
-     *            The file name
+     * @param strFileKey
+     *            The file key
      */
-    public void setFile( String strFile )
+    public void setFileKey( String strFileKey )
     {
-        _strFile = strFile;
+        _strFileKey = strFileKey;
     }
 
     /**
-     * Returns the name of the picture associated to the page template type in the administration unit
+     * Returns the key of the picture associated to the page template type in the administration unit
      *
-     * @return The name of the picture as a string
+     * @return The key of the picture as a string
      */
-    public String getPicture( )
+    public String getPictureKey( )
     {
-        return _strPicture;
+        return _strPictureKey;
     }
 
     /**
-     * Sets the name of the picture associated to the page template type in the administration unit
+     * Sets the key of the picture associated to the page template type in the administration unit
      *
-     * @param strPicture
-     *            The picture name
+     * @param strPictureKey
+     *            The picture key
      */
-    public void setPicture( String strPicture )
+    public void setPictureKey( String strPictureKey )
     {
-        _strPicture = strPicture;
+        _strPictureKey = strPictureKey;
+    }
+
+    /**
+     * Returns the portlet type
+     *
+     * @return the portlet type
+     */
+    public String getPortletType( )
+    {
+        return _strPortletType;
+    }
+
+    /**
+     * Sets the portlet type
+     *
+     * @param strPortletType
+     *            the portlet type
+     */
+    public void setPortletType( String strPortletType )
+    {
+        _strPortletType = strPortletType;
     }
 }

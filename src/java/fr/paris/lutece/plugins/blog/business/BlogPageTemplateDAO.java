@@ -45,12 +45,12 @@ public final class BlogPageTemplateDAO implements IBlogPageTemplateDAO
 {
     // Constants
     private static final String SQL_QUERY_NEW_PK = " SELECT max( id_page_template_document ) FROM blog_page_template";
-    private static final String SQL_QUERY_SELECT = " SELECT id_page_template_document, description, page_template_path, picture_path FROM blog_page_template WHERE id_page_template_document = ?";
-    private static final String SQL_QUERY_INSERT = " INSERT INTO blog_page_template ( id_page_template_document, description, page_template_path, picture_path ) VALUES ( ?, ?, ?, ? )";
+    private static final String SQL_QUERY_SELECT = " SELECT id_page_template_document, description, page_template_key, picture_file_key, portlet_type FROM blog_page_template WHERE id_page_template_document = ?";
+    private static final String SQL_QUERY_INSERT = " INSERT INTO blog_page_template ( id_page_template_document, description, page_template_key, picture_file_key, portlet_type ) VALUES ( ?, ?, ?, ?, ? )";
     private static final String SQL_QUERY_DELETE = " DELETE FROM blog_page_template WHERE id_page_template_document = ?";
-    private static final String SQL_QUERY_UPDATE = " UPDATE blog_page_template SET id_page_template_document = ?, description = ?, page_template_path = ?, picture_path = ? "
+    private static final String SQL_QUERY_UPDATE = " UPDATE blog_page_template SET id_page_template_document = ?, description = ?, page_template_key = ?, picture_file_key = ?, portlet_type = ?"
             + " WHERE id_page_template_document = ?";
-    private static final String SQL_QUERY_SELECTALL = " SELECT id_page_template_document , description, page_template_path, picture_path FROM blog_page_template ORDER BY id_page_template_document ";
+    private static final String SQL_QUERY_SELECTALL = " SELECT id_page_template_document , description, page_template_key, picture_file_key, portlet_type FROM blog_page_template ORDER BY id_page_template_document ";
 
     // /////////////////////////////////////////////////////////////////////////////////////
     // Access methods to data
@@ -89,8 +89,9 @@ public final class BlogPageTemplateDAO implements IBlogPageTemplateDAO
 
             daoUtil.setInt( 1, blogPageTemplate.getId( ) );
             daoUtil.setString( 2, blogPageTemplate.getDescription( ) );
-            daoUtil.setString( 3, blogPageTemplate.getFile( ) );
-            daoUtil.setString( 4, blogPageTemplate.getPicture( ) );
+            daoUtil.setString( 3, blogPageTemplate.getFileKey( ) );
+            daoUtil.setString( 4, blogPageTemplate.getPictureKey( ) );
+            daoUtil.setString( 5, blogPageTemplate.getPortletType( ) );
 
             daoUtil.executeUpdate( );
         }
@@ -118,8 +119,9 @@ public final class BlogPageTemplateDAO implements IBlogPageTemplateDAO
                 blogPageTemplate = new BlogPageTemplate( );
                 blogPageTemplate.setId( daoUtil.getInt( 1 ) );
                 blogPageTemplate.setDescription( daoUtil.getString( 2 ) );
-                blogPageTemplate.setFile( daoUtil.getString( 3 ) );
-                blogPageTemplate.setPicture( daoUtil.getString( 4 ) );
+                blogPageTemplate.setFileKey( daoUtil.getString( 3 ) );
+                blogPageTemplate.setPictureKey( daoUtil.getString( 4 ) );
+                blogPageTemplate.setPortletType( daoUtil.getString( 5 ) );
             }
         }
 
@@ -155,9 +157,10 @@ public final class BlogPageTemplateDAO implements IBlogPageTemplateDAO
         {
             daoUtil.setInt( 1, blogPageTemplate.getId( ) );
             daoUtil.setString( 2, blogPageTemplate.getDescription( ) );
-            daoUtil.setString( 3, blogPageTemplate.getFile( ) );
-            daoUtil.setString( 4, blogPageTemplate.getPicture( ) );
+            daoUtil.setString( 3, blogPageTemplate.getFileKey( ) );
+            daoUtil.setString( 4, blogPageTemplate.getPictureKey( ) );
             daoUtil.setInt( 5, blogPageTemplate.getId( ) );
+            daoUtil.setString( 6, blogPageTemplate.getPortletType( ) );
 
             daoUtil.executeUpdate( );
         }
@@ -182,8 +185,9 @@ public final class BlogPageTemplateDAO implements IBlogPageTemplateDAO
 
                 blogPageTemplate.setId( daoUtil.getInt( 1 ) );
                 blogPageTemplate.setDescription( daoUtil.getString( 2 ) );
-                blogPageTemplate.setFile( daoUtil.getString( 3 ) );
-                blogPageTemplate.setPicture( daoUtil.getString( 4 ) );
+                blogPageTemplate.setFileKey( daoUtil.getString( 3 ) );
+                blogPageTemplate.setPictureKey( daoUtil.getString( 4 ) );
+                blogPageTemplate.setPortletType( daoUtil.getString( 5 ) );
                 listBlogPageTemplates.add( blogPageTemplate );
             }
 

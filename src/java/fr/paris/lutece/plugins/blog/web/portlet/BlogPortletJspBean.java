@@ -46,6 +46,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
 import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.plugins.blog.web.ManagePageTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,6 +55,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * This class provides the user interface to manage BlogsPortlet features
@@ -75,6 +83,7 @@ public class BlogPortletJspBean extends PortletJspBean
     public static final String PARAMETER_PORTLET_NAME = "portlet_name";
     public static final String PARAMETER_HTMLDOC_SELECTED = "blog_selected";
     private static final String PARAMETER_PAGE_TEMPLATE_CODE = "page_template_code";
+    private static final HttpSession session = null;
 
     public static final String TEMPLATE_MODIFY_PORTLET = "admin/portlet/modify_portlet.html";
 
@@ -92,16 +101,29 @@ public class BlogPortletJspBean extends PortletJspBean
         String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
         List<Blog> listBlog = BlogHome.getBlogsList( );
         HashMap<String, Object> model = new HashMap<>( );
-
+        model.put( PARAMETER_PAGE_ID, strPageId );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LIST_HTMLDOC, listBlog );
         model.put( MARK_LIST_PAGES, BlogListPortletHome.loadPages( BlogPortlet.RESOURCE_ID ) );
 
-        HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
+        HttpSession session = request.getSession();
 
+        // Save data to session
+        session.setAttribute("savedData", request);
+
+
+        HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
+        // save the request in a session
         return template.getHtml( );
     }
+    public String addTemplate( HttpServletRequest request ) throws java.text.ParseException
+    {
+        HttpServletRequest retrievedRequest = (javax.servlet.http.HttpServletRequest) session.getAttribute( "savedData" );
 
+          retrievedRequest =  ManagePageTemplate.staticAddPageTemplate( request, retrievedRequest );
+        // redirect to the page template creation page with the request in session
+        return getCreate( retrievedRequest );
+    }
     /**
      * Returns the BlogPortlet form for update
      * 

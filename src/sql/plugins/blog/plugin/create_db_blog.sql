@@ -135,7 +135,8 @@ DROP TABLE IF EXISTS blog_page_template;
 CREATE TABLE blog_page_template (
 	id_page_template_document int default 0 NOT NULL,
 	page_template_path varchar(255) default NULL,
-	picture_path varchar(255) default NULL,
+    page_template_key VARCHAR(100) DEFAULT NULL,
+    picture_file_key VARCHAR(100) DEFAULT NULL,
 	description varchar(255) default NULL,
 	portlet_type varchar(255) default NULL,
 	
